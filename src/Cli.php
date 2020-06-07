@@ -4,9 +4,10 @@ namespace GenDiff\Cli;
 
 use Docopt;
 
-function run()
-{
-    $doc = <<<'DOCOPT'
+const PLAIN_FORMAT = 'plain';
+const JSON_FORMAT = 'json';
+
+const DOC = <<<'DOCOPT'
 gendiff -h
 
 Generate diff
@@ -14,11 +15,15 @@ Generate diff
 Usage:
   gendiff (-h|--help)
   gendiff (-v|--version)
+  gendiff [--format <fmt>] <firstFile> <secondFile>
 
 Options:
-  -h --help                     Show this screen
-  -v --version                  Show version
+  -h --help          Show this screen
+  -v --version       Show version
+  --format <fmt>     Report format [default: plain]
 DOCOPT;
 
-    Docopt::handle($doc);
+function run()
+{
+    Docopt::handle(DOC);
 }

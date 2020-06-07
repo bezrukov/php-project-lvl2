@@ -1,9 +1,7 @@
 {
     "name": "v.bezrukov/gendiff",
     "license": "MIT",
-    "bin": [
-        "bin/gendiff"
-    ],
+    "bin": ["bin/gendiff"],
     "autoload": {
         "files": [
             "src/Cli.php"
