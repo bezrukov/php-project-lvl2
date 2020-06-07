@@ -1,5 +1,6 @@
 {
     "name": "v.bezrukov/gendiff",
+    "license": "MIT",
     "bin": [
         "bin/gendiff"
     ],

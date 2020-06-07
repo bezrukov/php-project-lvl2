@@ -2,7 +2,7 @@
 
 namespace GenDiff\Cli;
 
-use \Docopt;
+use Docopt;
 
 function run()
 {
