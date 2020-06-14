@@ -1,6 +1,6 @@
 <?php
 
-namespace GenDiff\Cli;
+namespace Differ\Cli;
 
 use Docopt;
 
@@ -25,5 +25,8 @@ DOCOPT;
 
 function run()
 {
-    Docopt::handle(DOC);
+    $args = Docopt::handle(DOC);
+    $diff = \Differ\Differ\genDiff($args->args['<firstFile>'], $args->args['<secondFile>']);
+
+    print_r($diff);
 }
