@@ -3,5 +3,8 @@
 
 
 ### Examples
-#### Flat JSON
+#### JSON format
 [![asciicast](https://asciinema.org/a/339482.png)](https://asciinema.org/a/339482)
+
+#### Yaml format
+[![asciicast](https://asciinema.org/a/345522.png)](https://asciinema.org/a/345522)
