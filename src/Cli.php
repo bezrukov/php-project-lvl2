@@ -17,13 +17,13 @@ Usage:
 Options:
   -h --help          Show this screen
   -v --version       Show version
-  --format <fmt>     Report format [default: json]
+  -f --format <fmt>     Report format [default: json]
 DOCOPT;
 
 function run()
 {
     $args = Docopt::handle(DOC);
-    $diff = \Differ\Differ\genDiff($args->args['<firstFile>'], $args->args['<secondFile>'], $args->args['<fmt>']);
+    $diff = \Differ\Differ\genDiff($args->args['<firstFile>'], $args->args['<secondFile>'], $args->args['--format']);
 
     print_r($diff);
 }

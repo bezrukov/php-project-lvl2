@@ -60,10 +60,10 @@ function getViewData($firstData, $secondData): string
     );
 }
 
-function genDiff(string $pathToFile1, string $pathToFile2): string
+function genDiff(string $pathToFile1, string $pathToFile2, string $format): string
 {
-    $data1 = parseFileContent(getFileContent($pathToFile1));
-    $data2 = parseFileContent(getFileContent($pathToFile2));
+    $data1 = parseFileContent(getFileContent($pathToFile1), $format);
+    $data2 = parseFileContent(getFileContent($pathToFile2), $format);
 
     return getViewData($data1, $data2);
 }
