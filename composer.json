@@ -5,7 +5,8 @@
     "autoload": {
         "files": [
             "src/Cli.php",
-            "src/Differ/Differ.php"
+            "src/Differ/Differ.php",
+            "src/Parser/Parser.php"
         ]
     },
     "authors": [
@@ -19,7 +20,8 @@
     },
     "require": {
         "docopt/docopt": "^1.0",
-        "funct/funct": "^1.5"
+        "funct/funct": "^1.5",
+        "symfony/yaml": "^5.1"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",

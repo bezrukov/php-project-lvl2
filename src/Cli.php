@@ -4,9 +4,6 @@ namespace Differ\Cli;
 
 use Docopt;
 
-const PLAIN_FORMAT = 'plain';
-const JSON_FORMAT = 'json';
-
 const DOC = <<<'DOCOPT'
 gendiff -h
 
@@ -20,13 +17,13 @@ Usage:
 Options:
   -h --help          Show this screen
   -v --version       Show version
-  --format <fmt>     Report format [default: plain]
+  --format <fmt>     Report format [default: json]
 DOCOPT;
 
 function run()
 {
     $args = Docopt::handle(DOC);
-    $diff = \Differ\Differ\genDiff($args->args['<firstFile>'], $args->args['<secondFile>']);
+    $diff = \Differ\Differ\genDiff($args->args['<firstFile>'], $args->args['<secondFile>'], $args->args['<fmt>']);
 
     print_r($diff);
 }

@@ -2,18 +2,20 @@
 
 namespace Differ\Differ;
 
+use function Differ\Parser\getParser;
+
+use const Differ\Parser\JSON_FORMAT;
+
 function getFileContent(string $pathToFile)
 {
     return file_get_contents($pathToFile);
 }
 
-function parseFileContent($content, $format = 'json'): array
+function parseFileContent(string $content, $format = JSON_FORMAT): array
 {
-    try {
-        return json_decode($content, true, 512, JSON_THROW_ON_ERROR);
-    } catch (\JsonException $e) {
-        return [];
-    }
+    $parser = getParser($format);
+
+    return $parser($content);
 }
 
 function getViewData($firstData, $secondData): string
@@ -22,14 +24,14 @@ function getViewData($firstData, $secondData): string
 
     $removedKeys = array_filter(
         array_keys($firstData),
-        function ($key) use ($includedKeys) {
+        static function ($key) use ($includedKeys) {
             return !in_array($key, $includedKeys, true);
         }
     );
 
     $addedKys = array_filter(
         array_keys($secondData),
-        function ($key) use ($includedKeys) {
+        static function ($key) use ($includedKeys) {
             return !in_array($key, $includedKeys, true);
         }
     );
