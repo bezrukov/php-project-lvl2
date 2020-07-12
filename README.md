@@ -8,3 +8,6 @@
 
 #### Yaml format
 [![asciicast](https://asciinema.org/a/345522.png)](https://asciinema.org/a/345522)
+
+#### Recursive structure
+[![asciicast](https://asciinema.org/a/347099.png)](https://asciinema.org/a/347099)
