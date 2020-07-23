@@ -6,7 +6,10 @@
         "files": [
             "src/Cli.php",
             "src/Differ/Differ.php",
-            "src/Parser/Parser.php"
+            "src/Parser/Parser.php",
+            "src/Formatters/Json/json.php",
+            "src/Formatters/Plain/plain.php",
+            "src/Formatters/Formatters.php"
         ]
     },
     "authors": [
