@@ -3,8 +3,7 @@
 namespace Differ\Differ;
 
 use function Differ\Parser\getParser;
-
-use const Differ\Parser\JSON_FORMAT;
+use function Funct\Collection\last;
 
 const STATUS_REMOVED = 'removed';
 const STATUS_ADDED = 'added';
@@ -16,7 +15,13 @@ function getFileContent(string $pathToFile)
     return file_get_contents($pathToFile);
 }
 
-function parseFileContent(string $content, $format = JSON_FORMAT): array
+function parseFileFormat(string $path)
+{
+    $fileName = (string) last(explode('/', $path));
+    return (string) last(explode('.', $fileName));
+}
+
+function parseFileContent(string $content, $format): array
 {
     $parser = getParser($format);
 
@@ -91,7 +96,7 @@ function getArrayView(array $data, $deep = ' '): string
     return implode("\n", $view);
 }
 
-function getView(array $diff, $deep = ''): string
+function getFormat(array $diff, $deep = ''): string
 {
     $view = ['{'];
 
@@ -99,7 +104,7 @@ function getView(array $diff, $deep = ''): string
         $diff,
         static function ($acc, $elem) use ($deep) {
             if (!empty($elem['children'])) {
-                $acc[] = sprintf($deep . "   %s: %s", $elem['key'], getView($elem['children'], $deep . '  '));
+                $acc[] = sprintf($deep . "   %s: %s", $elem['key'], getFormat($elem['children'], $deep . '  '));
                 return $acc;
             }
 
@@ -142,12 +147,12 @@ function getView(array $diff, $deep = ''): string
     return implode("\n", $view);
 }
 
-function genDiff(string $pathToFile1, string $pathToFile2, string $format): string
+function genDiff(string $pathToFile1, string $pathToFile2, string $format = ''): string
 {
-    $data1 = parseFileContent(getFileContent($pathToFile1), $format);
-    $data2 = parseFileContent(getFileContent($pathToFile2), $format);
+    $data1 = parseFileContent(getFileContent($pathToFile1), parseFileFormat($pathToFile1));
+    $data2 = parseFileContent(getFileContent($pathToFile2), parseFileFormat($pathToFile2));
 
     $diff = makeDiff($data1, $data2);
 
-    return getView($diff);
+    return getFormat($diff);
 }
