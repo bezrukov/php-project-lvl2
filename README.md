@@ -11,3 +11,6 @@
 
 #### Recursive structure
 [![asciicast](https://asciinema.org/a/347099.png)](https://asciinema.org/a/347099)
+
+### Plain format
+[![asciicast](https://asciinema.org/a/349284.png)](https://asciinema.org/a/349284)
