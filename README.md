@@ -2,15 +2,33 @@
 ![](https://github.com/bezrukov/php-project-lvl2/workflows/PHP%20CI/badge.svg)
 
 
+### Install
+
+```
+composer require v.bezrukov/gendiff
+```
+
 ### Examples
-#### JSON format
-[![asciicast](https://asciinema.org/a/339482.png)](https://asciinema.org/a/339482)
+#### Pretty format
+```
+gendiff before.json after.json
+```
+[![asciicast](https://asciinema.org/a/349653.png)](https://asciinema.org/a/349653)
 
 #### Yaml format
-[![asciicast](https://asciinema.org/a/345522.png)](https://asciinema.org/a/345522)
+```
+gendiff before.yaml after.yaml
+```
+[![asciicast](https://asciinema.org/a/349657.png)](https://asciinema.org/a/349657)
 
 #### Recursive structure
-[![asciicast](https://asciinema.org/a/347099.png)](https://asciinema.org/a/347099)
+```
+gendiff before.json after.json
+```
+[![asciicast](https://asciinema.org/a/349654.png)](https://asciinema.org/a/349654)
 
 ### Plain format
-[![asciicast](https://asciinema.org/a/349284.png)](https://asciinema.org/a/349284)
+```
+gendiff --format plain before.json after.json
+```
+[![asciicast](https://asciinema.org/a/349655.png)](https://asciinema.org/a/349655)

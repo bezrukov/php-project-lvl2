@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 const FORMAT_JSON = 'json';
 const FORMAT_PLAIN = 'plain';
+const FORMAT_PRETTY = 'pretty';
 
 const STATUS_REMOVED = 'removed';
 const STATUS_ADDED = 'added';
@@ -24,7 +25,7 @@ function getFormatters($format)
         };
     }
 
-    return static function () {
-        return [];
+    return static function ($content) {
+        return formatToPretty($content);
     };
 }

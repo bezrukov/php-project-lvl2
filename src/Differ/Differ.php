@@ -75,7 +75,7 @@ function makeDiff(array $firstData, array $secondData): array
     );
 }
 
-function genDiff(string $pathToFile1, string $pathToFile2, string $format = FORMAT_JSON): string
+function genDiff(string $pathToFile1, string $pathToFile2, string $format = FORMAT_PRETTY): string
 {
     $data1 = parseFileContent(getFileContent($pathToFile1), parseFileFormat($pathToFile1));
     $data2 = parseFileContent(getFileContent($pathToFile2), parseFileFormat($pathToFile2));

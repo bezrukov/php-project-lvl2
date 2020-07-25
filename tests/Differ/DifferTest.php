@@ -6,6 +6,7 @@ namespace Differ;
 
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+
 use const Differ\Parser\JSON_FORMAT;
 
 class DifferTest extends TestCase
@@ -26,7 +27,7 @@ class DifferTest extends TestCase
         string $firstContent,
         string $secondContent,
         string $expected,
-        string $format = JSON_FORMAT
+        string $format = FORMAT_PRETTY
     ): void {
         $root = vfsStream::setup();
         $firstFile = vfsStream::newFile($firstFilename)->at($root);
@@ -245,6 +246,126 @@ Property 'group2' was removed
 Property 'group3' was added with value: 'complex value'
 EOT,
                 'format' => FORMAT_PLAIN
+            ],
+            'json format and deepDAta' => [
+                'firstName' => 'before.json',
+                'secondName' => 'after.json',
+                'firstContent' => <<<'EOT'
+{
+  "common": {
+    "setting1": "Value 1",
+    "setting2": "200",
+    "setting3": true,
+    "setting6": {
+      "key": "value"
+    }
+  },
+  "group1": {
+    "baz": "bas",
+    "foo": "bar"
+  },
+  "group2": {
+    "abc": "12345"
+  }
+}
+EOT,
+                'secondContent' => <<<'EOT'
+{
+  "common": {
+    "setting1": "Value 1",
+    "setting3": true,
+    "setting4": "blah blah",
+    "setting5": {
+      "key5": "value5"
+    }
+  },
+
+  "group1": {
+    "foo": "bar",
+    "baz": "bars"
+  },
+
+  "group3": {
+    "fee": "100500"
+  }
+}
+EOT,
+                'expected' => <<<'EOT'
+{
+    "common": {
+        "children": {
+            "setting1": {
+                "status": "not_changed",
+                "value": "Value 1",
+                "key": "setting1"
+            },
+            "setting2": {
+                "status": "removed",
+                "value": "200",
+                "key": "setting2"
+            },
+            "setting3": {
+                "status": "not_changed",
+                "value": true,
+                "key": "setting3"
+            },
+            "setting6": {
+                "status": "removed",
+                "value": {
+                    "key": "value"
+                },
+                "key": "setting6"
+            },
+            "setting4": {
+                "status": "added",
+                "value": "blah blah",
+                "key": "setting4"
+            },
+            "setting5": {
+                "status": "added",
+                "value": {
+                    "key5": "value5"
+                },
+                "key": "setting5"
+            }
+        },
+        "key": "common",
+        "status": "not_changed"
+    },
+    "group1": {
+        "children": {
+            "baz": {
+                "status": "changed",
+                "value": "bars",
+                "oldValue": "bas",
+                "key": "baz"
+            },
+            "foo": {
+                "status": "not_changed",
+                "value": "bar",
+                "key": "foo"
+            }
+        },
+        "key": "group1",
+        "status": "not_changed"
+    },
+    "group2": {
+        "status": "removed",
+        "value": {
+            "abc": "12345"
+        },
+        "key": "group2"
+    },
+    "group3": {
+        "status": "added",
+        "value": {
+            "fee": "100500"
+        },
+        "key": "group3"
+    }
+}
+EOT,
+                'format' => FORMAT_JSON
             ],
         ];
     }
