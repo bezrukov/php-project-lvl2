@@ -27,5 +27,5 @@ function run()
     $args = Docopt::handle(DOC);
     $diff = \Differ\Differ\genDiff($args->args['<firstFile>'], $args->args['<secondFile>'], $args->args['--format']);
 
-    print_r($diff . PHP_EOL);
+    print_r($diff . "\n");
 }
