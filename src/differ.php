@@ -2,17 +2,31 @@
 
 namespace Differ;
 
-use function Funct\Collection\last;
+use function Differ\parser\getParser;
 
-function getFileContent(string $pathToFile)
+/**
+ * @param string $pathToFile
+ * @return string
+ */
+function getFileContent(string $pathToFile): string
 {
     return file_get_contents($pathToFile);
 }
 
-function parseFileFormat(string $path)
+/**
+ * @param string $path
+ * @return string
+ * @throws \Exception
+ */
+function parseFileFormat(string $path): string
 {
-    $fileName = (string) last(explode('/', $path));
-    return (string) last(explode('.', $fileName));
+    $pathExt = strtolower(pathinfo(realpath($path), PATHINFO_EXTENSION));
+
+    if (empty($pathExt)) {
+        throw new \Exception("Empty extension from file");
+    }
+
+    return $pathExt;
 }
 
 function parseFileContent(string $content, $format): array

@@ -2,31 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Differ;
+namespace Differ\parser;
 
 use Symfony\Component\Yaml\Yaml;
 
 const FILE_FORMAT_JSON = 'json';
 const FILE_FORMAT_YAML = 'yaml';
-
-/**
- * @param string $content
- * @return array
- * @throws \JsonException
- */
-function parseJson(string $content): array
-{
-    return json_decode($content, true, 512, JSON_THROW_ON_ERROR);
-}
-
-/**
- * @param string $content
- * @return array
- */
-function parseYaml(string $content): array
-{
-    return Yaml::parse($content, Yaml::PARSE_OBJECT);
-}
 
 /**
  * @param string $format
@@ -37,13 +18,13 @@ function getParser(string $format): \Closure
 {
     if ($format === FILE_FORMAT_JSON) {
         return static function ($content) {
-            return parseJson($content);
+            return json_decode($content, true, 512, JSON_THROW_ON_ERROR);
         };
     }
 
     if ($format === FILE_FORMAT_YAML) {
         return static function ($content) {
-            return parseYaml($content);
+            return Yaml::parse($content, Yaml::PARSE_OBJECT);
         };
     }
 
