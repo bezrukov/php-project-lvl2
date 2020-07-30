@@ -4,9 +4,9 @@
     "bin": ["bin/gendiff"],
     "autoload": {
         "files": [
-            "src/Cli.php",
-            "src/Differ/Differ.php",
-            "src/Parser/Parser.php",
+            "src/cli.php",
+            "src/differ.php",
+            "src/parser.php",
             "src/Formatters/Json/json.php",
             "src/Formatters/Plain/plain.php",
             "src/Formatters/Pretty/pretty.php",
@@ -30,7 +30,6 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
-        "phpunit/phpunit": "^9.2",
-        "mikey179/vfsstream": "^1.6"
+        "phpunit/phpunit": "^9.2"
     }
 }

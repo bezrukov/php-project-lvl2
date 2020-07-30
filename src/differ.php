@@ -1,8 +1,7 @@
 <?php
 
-namespace Differ\Differ;
+namespace Differ;
 
-use function Differ\Parser\getParser;
 use function Funct\Collection\last;
 
 function getFileContent(string $pathToFile)
