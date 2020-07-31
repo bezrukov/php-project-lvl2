@@ -2,7 +2,7 @@
 
 namespace Differ;
 
-use function Differ\parser\getParser;
+use function Differ\parser\parseContent;
 
 /**
  * @param string $pathToFile
@@ -27,13 +27,6 @@ function parseFileFormat(string $path): string
     }
 
     return $pathExt;
-}
-
-function parseFileContent(string $content, $format): array
-{
-    $parser = getParser($format);
-
-    return $parser($content);
 }
 
 function makeDiff(array $firstData, array $secondData): array
@@ -90,8 +83,8 @@ function makeDiff(array $firstData, array $secondData): array
 
 function genDiff(string $pathToFile1, string $pathToFile2, string $format = FORMAT_PRETTY): string
 {
-    $data1 = parseFileContent(getFileContent($pathToFile1), parseFileFormat($pathToFile1));
-    $data2 = parseFileContent(getFileContent($pathToFile2), parseFileFormat($pathToFile2));
+    $data1 = parseContent(getFileContent($pathToFile1), parseFileFormat($pathToFile1));
+    $data2 = parseContent(getFileContent($pathToFile2), parseFileFormat($pathToFile2));
 
     $diff = makeDiff($data1, $data2);
     $formatter = getFormatters($format);
