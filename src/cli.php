@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Differ;
+namespace Differ\cli;
 
 use Docopt;
+
+use function Differ\differ\genDiff;
 
 const DOC = <<<'DOCOPT'
 gendiff -h
@@ -27,5 +29,6 @@ function run()
     $args = Docopt::handle(DOC);
     $diff = genDiff($args->args['<firstFile>'], $args->args['<secondFile>'], $args->args['--format']);
 
-    print_r($diff . "\n");
+    print_r($diff);
+    print_r("\n");
 }

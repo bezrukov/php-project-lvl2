@@ -1,73 +1,73 @@
-{
-    "common": {
-        "children": {
-            "setting1": {
+[
+    {
+        "children": [
+            {
                 "status": "not_changed",
                 "value": "Value 1",
                 "key": "setting1"
             },
-            "setting2": {
+            {
                 "status": "removed",
                 "value": "200",
                 "key": "setting2"
             },
-            "setting3": {
+            {
                 "status": "not_changed",
                 "value": true,
                 "key": "setting3"
             },
-            "setting6": {
+            {
                 "status": "removed",
                 "value": {
                     "key": "value"
                 },
                 "key": "setting6"
             },
-            "setting4": {
+            {
                 "status": "added",
                 "value": "blah blah",
                 "key": "setting4"
             },
-            "setting5": {
+            {
                 "status": "added",
                 "value": {
                     "key5": "value5"
                 },
                 "key": "setting5"
             }
-        },
+        ],
         "key": "common",
         "status": "not_changed"
     },
-    "group1": {
-        "children": {
-            "baz": {
+    {
+        "children": [
+            {
                 "status": "changed",
                 "value": "bars",
                 "oldValue": "bas",
                 "key": "baz"
             },
-            "foo": {
+            {
                 "status": "not_changed",
                 "value": "bar",
                 "key": "foo"
             }
-        },
+        ],
         "key": "group1",
         "status": "not_changed"
     },
-    "group2": {
+    {
         "status": "removed",
         "value": {
             "abc": "12345"
         },
         "key": "group2"
     },
-    "group3": {
+    {
         "status": "added",
         "value": {
             "fee": "100500"
         },
         "key": "group3"
     }
-}
+]

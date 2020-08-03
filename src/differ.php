@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ;
+namespace Differ\differ;
 
 use function Differ\parser\parseContent;
 
@@ -40,7 +40,7 @@ function makeDiff(array $firstData, array $secondData): array
             $mutatedData = $secondData[$key] ?? null;
 
             if (empty($originData) || empty($mutatedData)) {
-                $acc[$key] = [
+                $acc[] = [
                     'status' => empty($originData) ? STATUS_ADDED : STATUS_REMOVED,
                     'value'  => empty($originData) ? $mutatedData : $originData,
                     'key'    => $key,
@@ -49,7 +49,7 @@ function makeDiff(array $firstData, array $secondData): array
             }
 
             if ($mutatedData === $originData) {
-                $acc[$key] = [
+                $acc[] = [
                     'status' => STATUS_NOT_CHANGED,
                     'value'  => $originData,
                     'key'    => $key,
@@ -59,7 +59,7 @@ function makeDiff(array $firstData, array $secondData): array
             }
 
             if (is_array($originData) && is_array($mutatedData)) {
-                $acc[$key] = [
+                $acc[] = [
                     'children' => makeDiff($originData, $mutatedData),
                     'key'      => $key,
                     'status'   => STATUS_NOT_CHANGED,
@@ -68,7 +68,7 @@ function makeDiff(array $firstData, array $secondData): array
                 return $acc;
             }
 
-            $acc[$key] = [
+            $acc[] = [
                 'status'   => STATUS_CHANGED,
                 'value'    => $mutatedData,
                 'oldValue' => $originData,
@@ -87,7 +87,7 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $format = FORM
     $data2 = parseContent(getFileContent($pathToFile2), parseFileFormat($pathToFile2));
 
     $diff = makeDiff($data1, $data2);
-    $formatter = getFormatters($format);
+    $getFormat = getFormatter($format);
 
-    return $formatter($diff);
+    return $getFormat($diff);
 }
