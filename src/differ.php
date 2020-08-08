@@ -6,11 +6,11 @@ use function Differ\Formatters\getFormatter;
 use function Differ\parser\parseContent;
 
 use const Differ\Formatters\FORMAT_PRETTY;
-use const Differ\Formatters\STATUS_ADDED;
-use const Differ\Formatters\STATUS_CHANGED;
-use const Differ\Formatters\STATUS_COMPLEXITY;
-use const Differ\Formatters\STATUS_NOT_CHANGED;
-use const Differ\Formatters\STATUS_REMOVED;
+use const Differ\Formatters\TYPE_ADDED;
+use const Differ\Formatters\TYPE_CHANGED;
+use const Differ\Formatters\TYPE_COMPLEXITY;
+use const Differ\Formatters\TYPE_NOT_CHANGED;
+use const Differ\Formatters\TYPE_REMOVED;
 
 /**
  * @param string $pathToFile
@@ -49,7 +49,7 @@ function makeDiff(array $firstData, array $secondData): array
 
             if ($newValue === $oldValue) {
                 $acc[] = [
-                    'status' => STATUS_NOT_CHANGED,
+                    'type' => TYPE_NOT_CHANGED,
                     'value'  => $oldValue,
                     'key'    => $key,
                 ];
@@ -59,7 +59,7 @@ function makeDiff(array $firstData, array $secondData): array
 
             if (empty($oldValue)) {
                 $acc[] = [
-                    'status' => STATUS_ADDED,
+                    'type' => TYPE_ADDED,
                     'value'  => $newValue,
                     'key'    => $key,
                 ];
@@ -68,7 +68,7 @@ function makeDiff(array $firstData, array $secondData): array
 
             if (empty($newValue)) {
                 $acc[] = [
-                    'status' => STATUS_REMOVED,
+                    'type' => TYPE_REMOVED,
                     'value'  => $oldValue,
                     'key'    => $key,
                 ];
@@ -79,14 +79,14 @@ function makeDiff(array $firstData, array $secondData): array
                 $acc[] = [
                     'children' => makeDiff($oldValue, $newValue),
                     'key'      => $key,
-                    'status'   => STATUS_COMPLEXITY,
+                    'type'   => TYPE_COMPLEXITY,
                 ];
 
                 return $acc;
             }
 
             $acc[] = [
-                'status'   => STATUS_CHANGED,
+                'type'   => TYPE_CHANGED,
                 'value'    => $newValue,
                 'oldValue' => $oldValue,
                 'key'      => $key,

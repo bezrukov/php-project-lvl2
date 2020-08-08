@@ -12,11 +12,11 @@ const FORMAT_JSON = 'json';
 const FORMAT_PLAIN = 'plain';
 const FORMAT_PRETTY = 'pretty';
 
-const STATUS_REMOVED = 'removed';
-const STATUS_ADDED = 'added';
-const STATUS_CHANGED = 'changed';
-const STATUS_NOT_CHANGED = 'not_changed';
-const STATUS_COMPLEXITY = 'complexity';
+const TYPE_REMOVED = 'removed';
+const TYPE_ADDED = 'added';
+const TYPE_CHANGED = 'changed';
+const TYPE_NOT_CHANGED = 'not_changed';
+const TYPE_COMPLEXITY = 'complexity';
 
 function getFormatter($format)
 {

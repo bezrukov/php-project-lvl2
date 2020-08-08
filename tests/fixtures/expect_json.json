@@ -2,34 +2,34 @@
     {
         "children": [
             {
-                "status": "not_changed",
+                "type": "not_changed",
                 "value": "Value 1",
                 "key": "setting1"
             },
             {
-                "status": "removed",
+                "type": "removed",
                 "value": "200",
                 "key": "setting2"
             },
             {
-                "status": "not_changed",
+                "type": "not_changed",
                 "value": true,
                 "key": "setting3"
             },
             {
-                "status": "removed",
+                "type": "removed",
                 "value": {
                     "key": "value"
                 },
                 "key": "setting6"
             },
             {
-                "status": "added",
+                "type": "added",
                 "value": "blah blah",
                 "key": "setting4"
             },
             {
-                "status": "added",
+                "type": "added",
                 "value": {
                     "key5": "value5"
                 },
@@ -37,34 +37,34 @@
             }
         ],
         "key": "common",
-        "status": "complexity"
+        "type": "complexity"
     },
     {
         "children": [
             {
-                "status": "changed",
+                "type": "changed",
                 "value": "bars",
                 "oldValue": "bas",
                 "key": "baz"
             },
             {
-                "status": "not_changed",
+                "type": "not_changed",
                 "value": "bar",
                 "key": "foo"
             }
         ],
         "key": "group1",
-        "status": "complexity"
+        "type": "complexity"
     },
     {
-        "status": "removed",
+        "type": "removed",
         "value": {
             "abc": "12345"
         },
         "key": "group2"
     },
     {
-        "status": "added",
+        "type": "added",
         "value": {
             "fee": "100500"
         },

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Differ\Formatters\pretty;
 
-use const Differ\Formatters\STATUS_ADDED;
-use const Differ\Formatters\STATUS_CHANGED;
-use const Differ\Formatters\STATUS_COMPLEXITY;
-use const Differ\Formatters\STATUS_NOT_CHANGED;
-use const Differ\Formatters\STATUS_REMOVED;
+use const Differ\Formatters\TYPE_ADDED;
+use const Differ\Formatters\TYPE_CHANGED;
+use const Differ\Formatters\TYPE_COMPLEXITY;
+use const Differ\Formatters\TYPE_NOT_CHANGED;
+use const Differ\Formatters\TYPE_REMOVED;
 
 function formatArrayValue(array $data, $deep = ''): string
 {
@@ -55,25 +55,25 @@ function formatToPretty(array $data, $deep = ''): string
     $view = array_reduce(
         $data,
         static function ($acc, $elem) use ($deep) {
-            switch ($elem['status']) {
-                case STATUS_NOT_CHANGED:
+            switch ($elem['type']) {
+                case TYPE_NOT_CHANGED:
                     $acc[] = formatToString($elem['key'], $elem['value'], $deep, ' ');
 
                     return $acc;
-                case STATUS_REMOVED:
+                case TYPE_REMOVED:
                     $acc[] = formatToString($elem['key'], $elem['value'], $deep, '-');
 
                     return $acc;
-                case STATUS_ADDED:
+                case TYPE_ADDED:
                     $acc[] = formatToString($elem['key'], $elem['value'], $deep, '+');
 
                     return $acc;
-                case STATUS_CHANGED:
+                case TYPE_CHANGED:
                     $acc[] = formatToString($elem['key'], $elem['value'], $deep, '+');
                     $acc[] = formatToString($elem['key'], $elem['oldValue'], $deep, '-');
 
                     return $acc;
-                case STATUS_COMPLEXITY:
+                case TYPE_COMPLEXITY:
                     $acc[] = formatToString(
                         $elem['key'],
                         formatToPretty($elem['children'], $deep . INDENTATION),
@@ -83,7 +83,7 @@ function formatToPretty(array $data, $deep = ''): string
 
                     return $acc;
                 default:
-                    throw new \Exception("Not valid type: {$elem['status']}");
+                    throw new \Exception("Not valid type: {$elem['type']}");
             }
         },
         $view

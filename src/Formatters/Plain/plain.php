@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Differ\Formatters\plain;
 
-use const Differ\Formatters\STATUS_ADDED;
-use const Differ\Formatters\STATUS_CHANGED;
-use const Differ\Formatters\STATUS_COMPLEXITY;
-use const Differ\Formatters\STATUS_NOT_CHANGED;
-use const Differ\Formatters\STATUS_REMOVED;
+use const Differ\Formatters\TYPE_ADDED;
+use const Differ\Formatters\TYPE_CHANGED;
+use const Differ\Formatters\TYPE_COMPLEXITY;
+use const Differ\Formatters\TYPE_NOT_CHANGED;
+use const Differ\Formatters\TYPE_REMOVED;
 
 function formatValueToSting($value): string
 {
@@ -32,30 +32,30 @@ function formatToPlain(array $data, $deep = ''): string
             $value = isset($elem['value']) ? formatValueToSting($elem['value']) : null;
             $oldValue = isset($elem['oldValue']) ? formatValueToSting($elem['oldValue']) : null;
 
-            switch ($elem['status']) {
-                case STATUS_COMPLEXITY:
+            switch ($elem['type']) {
+                case TYPE_COMPLEXITY:
                     $acc[] = formatToPlain($elem['children'], "{$deep}{$elem['key']}.");
 
                     return $acc;
-                case STATUS_NOT_CHANGED:
+                case TYPE_NOT_CHANGED:
                     $acc[] = "Property '{$deep}{$elem['key']}' wasn't changed";
 
                     return $acc;
-                case STATUS_ADDED:
+                case TYPE_ADDED:
                     $acc[] = "Property '{$deep}{$elem['key']}' was added with value: '$value'";
 
                     return $acc;
-                case STATUS_REMOVED:
+                case TYPE_REMOVED:
                     $acc[] = "Property '{$deep}{$elem['key']}' was removed";
 
                     return $acc;
-                case STATUS_CHANGED:
+                case TYPE_CHANGED:
                     $acc[] = "Property '{$deep}{$elem['key']}' was changed."
                         . " From '{$oldValue}' to '{$value}'";
 
                     return $acc;
                 default:
-                    throw new \Exception("Not valid type: {$elem['status']}");
+                    throw new \Exception("Not valid type: {$elem['type']}");
             }
         },
         []
