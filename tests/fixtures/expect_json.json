@@ -37,7 +37,7 @@
             }
         ],
         "key": "common",
-        "status": "not_changed"
+        "status": "complexity"
     },
     {
         "children": [
@@ -54,7 +54,7 @@
             }
         ],
         "key": "group1",
-        "status": "not_changed"
+        "status": "complexity"
     },
     {
         "status": "removed",

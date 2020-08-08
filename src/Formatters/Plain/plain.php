@@ -2,49 +2,61 @@
 
 declare(strict_types=1);
 
+namespace Differ\Formatters\plain;
+
+use const Differ\Formatters\STATUS_ADDED;
+use const Differ\Formatters\STATUS_CHANGED;
+use const Differ\Formatters\STATUS_COMPLEXITY;
+use const Differ\Formatters\STATUS_NOT_CHANGED;
+use const Differ\Formatters\STATUS_REMOVED;
+
+function formatValueToSting($value): string
+{
+    $valueType = gettype($value);
+
+    switch ($valueType) {
+        case 'array':
+            return 'complex value';
+        case 'boolean':
+            return json_encode($value);
+        default:
+            return $value;
+    }
+}
+
 function formatToPlain(array $data, $deep = ''): string
 {
     $view = array_reduce(
         $data,
         static function ($acc, $elem) use ($deep) {
-            if (!empty($elem['children'])) {
-                $acc[] = formatToPlain($elem['children'], sprintf('%s%s.', $deep, $elem['key']));
-                return $acc;
+            $value = isset($elem['value']) ? formatValueToSting($elem['value']) : null;
+            $oldValue = isset($elem['oldValue']) ? formatValueToSting($elem['oldValue']) : null;
+
+            switch ($elem['status']) {
+                case STATUS_COMPLEXITY:
+                    $acc[] = formatToPlain($elem['children'], "{$deep}{$elem['key']}.");
+
+                    return $acc;
+                case STATUS_NOT_CHANGED:
+                    $acc[] = "Property '{$deep}{$elem['key']}' wasn't changed";
+
+                    return $acc;
+                case STATUS_ADDED:
+                    $acc[] = "Property '{$deep}{$elem['key']}' was added with value: '$value'";
+
+                    return $acc;
+                case STATUS_REMOVED:
+                    $acc[] = "Property '{$deep}{$elem['key']}' was removed";
+
+                    return $acc;
+                case STATUS_CHANGED:
+                    $acc[] = "Property '{$deep}{$elem['key']}' was changed."
+                        . " From '{$oldValue}' to '{$value}'";
+
+                    return $acc;
+                default:
+                    throw new \Exception("Not valid type: {$elem['status']}");
             }
-
-            $value = is_array($elem['value'])
-                ? 'complex value'
-                : $elem['value'];
-
-            if ($elem['status'] === STATUS_NOT_CHANGED) {
-                $acc[] = sprintf('Property \'%s%s\' wasn\'t changed', $deep, $elem['key']);
-
-                return $acc;
-            }
-
-            if ($elem['status'] === STATUS_REMOVED) {
-                $acc[] = sprintf('Property \'%s%s\' was removed', $deep, $elem['key']);
-
-                return $acc;
-            }
-
-            if ($elem['status'] === STATUS_ADDED) {
-                $acc[] = sprintf('Property \'%s%s\' was added with value: \'%s\'', $deep, $elem['key'], $value);
-                return $acc;
-            }
-
-            if ($elem['status'] === STATUS_CHANGED) {
-                $acc[] = sprintf(
-                    'Property \'%s%s\' was changed. From \'%s\' to \'%s\'',
-                    $deep,
-                    $elem['key'],
-                    $elem['oldValue'],
-                    $elem['value']
-                );
-                return $acc;
-            }
-
-            return $acc;
         },
         []
     );

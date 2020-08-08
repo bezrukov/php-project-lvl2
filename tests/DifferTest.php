@@ -8,26 +8,30 @@ use PHPUnit\Framework\TestCase;
 
 use function Differ\differ\genDiff;
 
+use const Differ\Formatters\FORMAT_JSON;
+use const Differ\Formatters\FORMAT_PLAIN;
+use const Differ\Formatters\FORMAT_PRETTY;
+
 class DifferTest extends TestCase
 {
     /**
      * @dataProvider getDifferProvider
      *
-     * @param string $firstFile
-     * @param string $secondFile
-     * @param string $expected
+     * @param string $firstFileName
+     * @param string $secondFileName
+     * @param string $expectedFileName
      * @param string $format
      */
     public function testDiffer(
-        string $firstFile,
-        string $secondFile,
-        string $expected,
+        string $firstFileName,
+        string $secondFileName,
+        string $expectedFileName,
         string $format = FORMAT_PRETTY
     ): void {
 
         $fixturePath = __DIR__ . "/fixtures/";
-        $expectedContent = file_get_contents("{$fixturePath}{$expected}");
-        $result = genDiff("{$fixturePath}{$firstFile}", "{$fixturePath}{$secondFile}", $format);
+        $expectedContent = file_get_contents("{$fixturePath}{$expectedFileName}");
+        $result = genDiff("{$fixturePath}{$firstFileName}", "{$fixturePath}{$secondFileName}", $format);
 
         self::assertEquals($expectedContent, $result);
     }
