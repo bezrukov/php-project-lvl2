@@ -50,8 +50,7 @@ function formatToPlain(array $data, $deep = ''): string
 
                     return $acc;
                 case TYPE_CHANGED:
-                    $acc[] = "Property '{$deep}{$elem['key']}' was changed."
-                        . " From '{$oldValue}' to '{$value}'";
+                    $acc[] = "Property '{$deep}{$elem['key']}' was changed. From '{$oldValue}' to '{$value}'";
 
                     return $acc;
                 default:
