@@ -7,9 +7,9 @@
             "src/cli.php",
             "src/differ.php",
             "src/parser.php",
-            "src/Formatters/Json/json.php",
-            "src/Formatters/Plain/plain.php",
-            "src/Formatters/Pretty/pretty.php",
+            "src/Formatters/json.php",
+            "src/Formatters/plain.php",
+            "src/Formatters/pretty.php",
             "src/Formatters/Formatters.php"
         ]
     },

@@ -50,46 +50,37 @@ function formatToString($key, $value, $deep, $prefix)
 
 function formatToPretty(array $data, $deep = ''): string
 {
-    $view = ['{'];
-
-    $view = array_reduce(
-        $data,
-        static function ($acc, $elem) use ($deep) {
+    $view = array_map(
+        static function ($elem) use ($deep) {
             switch ($elem['type']) {
                 case TYPE_NOT_CHANGED:
-                    $acc[] = formatToString($elem['key'], $elem['value'], $deep, ' ');
-
-                    return $acc;
+                    return formatToString($elem['key'], $elem['value'], $deep, ' ');
                 case TYPE_REMOVED:
-                    $acc[] = formatToString($elem['key'], $elem['value'], $deep, '-');
-
-                    return $acc;
+                    return formatToString($elem['key'], $elem['value'], $deep, '-');
                 case TYPE_ADDED:
-                    $acc[] = formatToString($elem['key'], $elem['value'], $deep, '+');
-
-                    return $acc;
+                    return formatToString($elem['key'], $elem['value'], $deep, '+');
                 case TYPE_CHANGED:
-                    $acc[] = formatToString($elem['key'], $elem['value'], $deep, '+');
-                    $acc[] = formatToString($elem['key'], $elem['oldValue'], $deep, '-');
+                    $group = [
+                        formatToString($elem['key'], $elem['value'], $deep, '+'),
+                        formatToString($elem['key'], $elem['oldValue'], $deep, '-'),
+                    ];
 
-                    return $acc;
+                    return implode("\n", $group);
                 case TYPE_COMPLEXITY:
-                    $acc[] = formatToString(
+                    return formatToString(
                         $elem['key'],
                         formatToPretty($elem['children'], $deep . INDENTATION),
                         $deep,
                         ' '
                     );
-
-                    return $acc;
                 default:
                     throw new \Exception("Not valid type: {$elem['type']}");
             }
         },
-        $view
+        $data
     );
 
-    $view[] = $deep . '}';
+    $joined = implode("\n", $view);
 
-    return implode("\n", $view);
+    return "{\n{$joined}\n{$deep}}";
 }

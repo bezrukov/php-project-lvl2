@@ -2,7 +2,7 @@
 
 namespace Differ\differ;
 
-use function Differ\Formatters\getFormatter;
+use function Differ\Formatters\getFormat;
 use function Differ\parser\parseContent;
 
 use const Differ\Formatters\FORMAT_PRETTY;
@@ -28,13 +28,7 @@ function getFileContent(string $pathToFile): string
  */
 function parseFileFormat(string $path): string
 {
-    $pathExt = strtolower(pathinfo(realpath($path), PATHINFO_EXTENSION));
-
-    if (empty($pathExt)) {
-        throw new \Exception("Empty extension from file");
-    }
-
-    return $pathExt;
+    return strtolower(pathinfo(realpath($path), PATHINFO_EXTENSION));
 }
 
 function makeDiff(array $firstData, array $secondData): array
@@ -104,7 +98,6 @@ function genDiff(string $firstFilePath, string $secondFilePath, string $format =
     $data2 = parseContent(getFileContent($secondFilePath), parseFileFormat($secondFilePath));
 
     $diff = makeDiff($data1, $data2);
-    $getFormat = getFormatter($format);
 
-    return $getFormat($diff);
+    return getFormat($format, $diff);
 }
