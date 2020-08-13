@@ -10,7 +10,7 @@
             "src/Formatters/json.php",
             "src/Formatters/plain.php",
             "src/Formatters/pretty.php",
-            "src/Formatters/Formatters.php"
+            "src/Formatters/formatters.php"
         ]
     },
     "authors": [
